@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <title>Index</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    </head>
+
+    <body>
+        <h2>Contact Form</h2>
+        <form action="{{ url_for('contact_complete') }}" method="POST" novalidate="novalidate">
+            <table>
+                <tr>
+                    <td>User Name</td>
+                    <td>
+                        <input type="text" name="username" value="{{ username }}" placeholder="User Name" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email Address</td>
+                    <td>
+                        <input type="text" name="email" value="{{ email }}" placeholder="Email Address" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Contact Contents</td>
+                    <td>
+                        <textarea name="description" placeholder="Contact Contents">{{ description }}</textarea>
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="Submit Contact" />
+        </form>
+    </body>
+</html>
