@@ -8,6 +8,17 @@
 
     <body>
         <h2>Contact Form</h2>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li class="flash">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
         <form action="{{ url_for('contact_complete') }}" method="POST" novalidate="novalidate">
             <table>
                 <tr>
@@ -25,7 +36,7 @@
                 <tr>
                     <td>Contact Contents</td>
                     <td>
-                        <textarea name="description" placeholder="Contact Contents">{{ description }}</textarea>
+                        <textarea name="description" placeholder="Contact Content">{{ description }}</textarea>
                     </td>
                 </tr>
             </table>
