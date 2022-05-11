@@ -10,10 +10,13 @@ from flask import (
     flash,
 )
 import logging
+from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "2AZSMss3p5QPbcY2hBsJ"
 app.logger.setLevel(logging.DEBUG)
+app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
+toolbar = DebugToolbarExtension(app)
 
 #TOP(index)画面
 @app.route("/")
