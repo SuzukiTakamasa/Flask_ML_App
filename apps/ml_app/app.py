@@ -8,6 +8,8 @@ from flask import (
     request,
     redirect,
     flash,
+    make_response,
+    session,
 )
 import logging
 import os
@@ -42,7 +44,10 @@ def data_lists(name):
 #お問い合わせフォーム画面
 @app.route("/contact")
 def contact():
-    return render_template("contact.html")
+    response =  make_response(render_template("contact.html"))
+    response.set_cookie("flask_app key", "flask_app value")
+    session["username"] = "Suzuki"
+    return response
 
 #お問い合わせ完了画面
 @app.route("/contact/complete", methods=["GET", "POST"])
