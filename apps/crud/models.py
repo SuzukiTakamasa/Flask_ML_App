@@ -12,10 +12,10 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
-@property
-def password(self):
-    raise AttributeError("Password is not able to be read.")
+    @property
+    def password(self):
+        raise AttributeError("Password is not able to be read.")
 
-@password.setter
-def password(self, password):
-    self.password_hash = generate_password_hash(password)
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
