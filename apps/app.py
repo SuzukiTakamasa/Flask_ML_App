@@ -27,7 +27,10 @@ def create_app(config_key):
     Migrate(app, db)
 
     from apps.crud import views as crud_views
+    from apps.auth import views as auth_views
+
     app.register_blueprint(crud_views.crud, url_prefix="/crud")
+    app.register.blueprint(auth_views.auth, url_prefix="/auth")
 
     return app
 
