@@ -1,30 +1,26 @@
-{% extends "auth/base.html" %}
+{% extends "detector/base.html" %}
 {% block title %}User Creation{% endblock %}
 {% block content %}
-<h2>User Creation</h2>
+<div class="mx-auto dt-auth-main">
+    <div class="card bt-auth-signup">
+        <header>User Creation</header>
+        <section>
+            <form action="{{ url_for('auth.signup', next=request.args.get('next')) }}" method="post" novalidate="novalidate" class="form-signin">
 
-<form action="{{ url_for('auth.signup', next=request.args.get('next')) }}" method="POST" novalidate="novalidate">
-
-    {% for message in get_flashed_messages() %}
-    <p style="color: red;">{{ message }}</p>
-    {% endfor %}
-
-    {{ form.csrf_token }}
-
-    <p>{{ form.username.label }} {{ form.username(size=30, placeholder="User Name") }}</p>
-    {% for error in form.username.errors %}
-    <span style="color: red;">{{ error }}</span>
-    {% endfor %}
-
-    <p>{{ form.email.label }} {{ form.email(placeholder="Email Address") }}</p>
-    {% for error in form.email.errors %}
-    <span style="color: red;">{{ error }}</span>
-    {% endfor %}
-
-    <p>{{ form.password.label }} {{ form.password(placeholder="Password") }}</p>
-    {% for erro in form.password.errors %}
-    <span style="color: red;">{{ error }}</span>
-    {% endfor %}
-
-    <p>{{ form.submit() }}</p>
+                {% for message in get_flashed_messages() %}
+                <div class="dt-auth-flash">{{ message }}</div>
+                {% endfor %}
+                {{ form.csrf_token }}
+            
+                {{ form.username(size=30, class="form-control dt-auth-input", placeholder="User Name") }}
+            
+                {{ form.email(class="form-control dt-auth-input", placeholder="Email Address") }}
+            
+                {{ form.password(class="form-control dt-auth-input", placeholder="Password") }}
+            
+                <p>{{ form.submit(class="btn btn-md btn-primary btn-block dt-auth-btn") }}</p>
+            </form>
+        </section>
+    </div>
+</div>
 {% endblock %}
