@@ -5,6 +5,7 @@ basedir = Path(__file__).parents[1]
 class BasicConfig:
     SECRET_KEY = "2AZSMss3p5QPbcY2hBsJ"
     WTF_CSRF_SECRET_KEY = "AuwzyszUSsugKN7KZs6f"
+    UPLOAD_FOLDER = str(Path(basedir, "apps", "images"))
 
 class LocalConfig(BasicConfig):
     SQLALCHEMY_DATABASE_URI = f"sqlite:////{basedir}/local.sqlite"
