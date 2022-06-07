@@ -12,3 +12,6 @@ class UploadImageForm(FlaskForm):
     )
 
     submit = SubmitField("Upload")
+
+class DetectorForm(FlaskForm):
+    submit = SubmitField("Verification")
