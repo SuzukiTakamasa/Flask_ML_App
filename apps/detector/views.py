@@ -21,7 +21,7 @@ import random
 import cv2
 import numpy as np
 import torch
-import torchvision #-> Pending import due to an existing bug
+#import torchvision #-> Pending import due to an existing bug
 
 dt = Blueprint("detector", __name__, template_folder="templates")
 
@@ -99,7 +99,8 @@ def draw_texts(result_image, line, c1, c2, color, labels, label):
 def exec_detect(target_image_path):
     labels = current_app.config["LABELS"] #load labels from BasicConfig
     image = Image.open(target_image_path) #load image
-    image_tensor = torchvision.transforms.functional.to_tensor(image) #convert data type to tensor
+    #image_tensor = torchvision.transforms.functional.to_tensor(image) #convert data type to tensor
+    image_tensor = [] #Empty list due to the temporary reason
     model = torch.load(Path(current_app.root_path, "detector", "model.pt")) #load learned model
     model = model.eval()
     output = model([image_tensor])[0]
