@@ -4,7 +4,7 @@ from apps.crud.models import User
 import uuid
 from pathlib import Path
 from apps.detector.models import UserImage, UserImageTag
-from apps.detector.forms import UploadImageForm
+from apps.detector.forms import UploadImageForm, DetectorForm, DeleteForm
 from flask import (
     Blueprint,
     render_template,
@@ -33,7 +33,24 @@ def index():
         .filter(User.id == UserImage.user_id)
         .all()
     )
-    return render_template("detector/index.html", user_images=user_images)
+
+    user_image_tag_dict = {}
+    for user_image in user_images:
+        user_image_tags = (
+            db.session.query(UserImageTag)
+            .filter(UserImageTag.user_image_id == user_image.UserImage.id)
+            .all()
+        )
+        user_image_tag_dict[user_image.UserImage.id] = user_image_tags
+    
+    detector_form = DetectorForm()
+    delete_form = DeleteForm()
+
+    return render_template("detector/index.html",
+                           user_images=user_images,
+                           user_image_tag_dict=user_image_tag_dict,
+                           detector_form=detector_form,
+                           delete_form=delete_form)
 
 @dt.route("/images/<path:filename>")
 def image_file(filename):
@@ -157,5 +174,21 @@ def detect(image_id):
         db.session.rollback()
         current_app.logger.error(e)
         return redirect(url_for("detector.index"))
+    
+    return redirect(url_for("detector.index"))
+
+@dt.route("/images/delete/<string:image_id>", methods=["POST"])
+@login_required
+def delete_image(image_id):
+    try:
+        db.session.query(UserImageTag).filter(UserImageTag.user_image_id == image_id).delete()
+        db.session.query(UserImage).filter(UserImage.id == image_id).delete()
+
+        db.session.commit()
+    except SQLAlchemyError as e:
+        flash("An error has occured while deleting images process.")
+
+        current_app.logger.error(e)
+        db.session.rollback()
     
     return redirect(url_for("detector.index"))
