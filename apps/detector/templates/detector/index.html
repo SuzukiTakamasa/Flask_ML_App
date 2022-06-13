@@ -28,6 +28,7 @@
                     {{ delete_form.submit(class="btn btn-danger", disable="disabled") }}
                     {% endif %}
                 </form>
+            </div>
             <div class="p-2">
                 <form action="{{ url_for('detector.detect', image_id=user_image.UserImage.id) }}" method="POST">
                     {{ detector_form.csrf_token }}
