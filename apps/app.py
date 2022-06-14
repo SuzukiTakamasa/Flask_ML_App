@@ -1,5 +1,5 @@
 from pathlib import Path
-from flask import Flask
+from flask import Flask, render_template
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -25,6 +25,10 @@ def create_app(config_key):
         SQLALCHEMY_ECHO=True,
         WTF_CSRF_SECRET_KEY="AuwzyszUSsugKN7KZs6f"
     )
+    
+    #Custom error handling
+    app.register_error_handler(404, page_not_found)
+    app.register_error_handler(500, internal_server_error)
 
     csrf.init_app(app)
 
@@ -43,3 +47,10 @@ def create_app(config_key):
 
     return app
 
+def page_not_found(e):
+    """404 Not Found"""
+    return render_template("404.html"), 404
+
+def internal_server_error(e):
+    """500 Internal Server Error"""
+    return render_template("500.html"), 500
